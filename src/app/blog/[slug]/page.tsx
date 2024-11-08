@@ -1,9 +1,10 @@
+import ShareButton from "@/components/share";
 import Wrapper from "@/components/wrapper";
 import { getBlogs, getBlogsSlug } from "@/libs/blog";
 import { IBlog } from "@/types/blog";
 import {
   documentToReactComponents,
-//   Options,
+  //   Options,
 } from "@contentful/rich-text-react-renderer";
 // import { BLOCKS } from "@contentful/rich-text-types";
 // import Image from "next/image";
@@ -28,8 +29,8 @@ export async function generateMetadata({
     description: blog.fields.title,
     authors: blog.fields.author.fields.name,
     openGraph: {
-        images: [`https:${blog.fields.thumbnail.fields.file.url}`]
-    }
+      images: [`https:${blog.fields.thumbnail.fields.file.url}`],
+    },
   };
 }
 
@@ -40,11 +41,11 @@ export default async function BlogDetail({
 }) {
   const blog: IBlog = await getBlogsSlug(params.slug);
 
-//   const options: Options = {
-//     renderNode: {
-//       [BLOCKS.OL_LIST]: (node, children) => <ol type="1">{children}</ol>,
-//     },
-//   };
+  //   const options: Options = {
+  //     renderNode: {
+  //       [BLOCKS.OL_LIST]: (node, children) => <ol type="1">{children}</ol>,
+  //     },
+  //   };
   //   console.log(blog);
   return (
     <Wrapper>
@@ -61,6 +62,7 @@ export default async function BlogDetail({
           >
             Kembali
           </Link>
+          <ShareButton slug="{blog.fields.slug}" />
         </div>
         <div className="flex-[5] box-content pr-56 max-md:pr-0">
           <div className="text-xl font-semibold text-green-600 uppercase">
@@ -73,6 +75,9 @@ export default async function BlogDetail({
             </span>
             <span>•</span>
             <span>{blog.fields.date}</span>
+          </div>
+          <div className="md:hidden">
+            <ShareButton slug="{blog.fields.slug}" />
           </div>
           <div className="">
             <img
