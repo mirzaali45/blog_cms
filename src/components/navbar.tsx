@@ -3,7 +3,7 @@ import Wrapper from "./wrapper";
 
 export default function Navbar() {
   return (
-    <div className="h-[80px] sticky top-0 z-0">
+    <div className="h-[80px] top-0 z-0">
       <Wrapper>
         <Link href={"/"} className="flex items-center gap-2">
           <img
@@ -11,8 +11,8 @@ export default function Navbar() {
             alt="Logo Blogger"
             className="h-8"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            Blogger
+          <span className="self-center text-2xl font-semibold whitespace-nowrap text-green-700">
+            Mirza News
           </span>
         </Link>
       </Wrapper>

@@ -1,6 +1,7 @@
+import RecomandationBlog from "@/components/recomendation";
 import ShareButton from "@/components/share";
 import Wrapper from "@/components/wrapper";
-import { getBlogs, getBlogsSlug } from "@/libs/blog";
+import { getBlogs, getBlogsSlug, getBlogsSlugRecom } from "@/libs/blog";
 import { IBlog } from "@/types/blog";
 import {
   documentToReactComponents,
@@ -24,6 +25,7 @@ export async function generateMetadata({
   params: { slug: string };
 }) {
   const blog: IBlog = await getBlogsSlug(params.slug);
+
   return {
     title: blog.fields.title,
     description: blog.fields.title,
@@ -40,17 +42,12 @@ export default async function BlogDetail({
   params: { slug: string };
 }) {
   const blog: IBlog = await getBlogsSlug(params.slug);
+  const blogNe: IBlog[] = await getBlogsSlugRecom(params.slug);
 
-  //   const options: Options = {
-  //     renderNode: {
-  //       [BLOCKS.OL_LIST]: (node, children) => <ol type="1">{children}</ol>,
-  //     },
-  //   };
-  //   console.log(blog);
   return (
     <Wrapper>
-      <div className="flex mt-12 w-full">
-        <div className="flex-[2]">
+      <div className="flex mt-12 w-full gap-7">
+        <div className="flex-[2] max-md:hidden">
           <Link
             className="md:flex items-center space-x-6 font-display relative inline-block text-gray-800 font-semibold 
                        hover:text-gray-600 transition-colors duration-300
@@ -62,6 +59,7 @@ export default async function BlogDetail({
           >
             Kembali
           </Link>
+            <RecomandationBlog blogs={blogNe} />
           <ShareButton slug="{blog.fields.slug}" />
         </div>
         <div className="flex-[5] box-content pr-56 max-md:pr-0">
@@ -88,6 +86,10 @@ export default async function BlogDetail({
           </div>
           <div className="justify-center">
             {documentToReactComponents(blog.fields.content)}
+          </div>
+          <div className="md:hidden">
+            <hr />
+            <RecomandationBlog blogs={blogNe} />
           </div>
         </div>
       </div>
